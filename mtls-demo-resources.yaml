@@ -1,0 +1,36 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: server
+  labels:
+    app: web
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.21
+    - name: tcpdump
+      image: ubuntu:focal
+      command: ["/bin/bash"]
+      args: ["-c", "apt update && apt install -y tcpdump && tcpdump -nA -i eth0"]
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: client
+spec:
+  containers:
+    - name: curl
+      image: ubuntu:focal
+      command: ["/bin/bash"]
+      args: ["-c", "apt update && apt install -y curl && while true; do curl http://web; sleep 2; done"]
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - name: http
+      port: 80
