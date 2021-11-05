@@ -1,0 +1,14 @@
+kind: Egress
+apiVersion: policy.openservicemesh.io/v1alpha1
+metadata:
+  name: httpbin
+spec:
+  hosts:
+    - httpbin.org
+  sources:
+    - kind: ServiceAccount
+      name: curl
+      namespace: default
+  ports:
+    - number: 80
+      protocol: http
