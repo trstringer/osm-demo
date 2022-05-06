@@ -60,6 +60,7 @@ demo_traffic_shifting () {
     wait_for_continue
 
     echo "  5. Modify the TrafficSplit to make it all for V2"
+    echo "    $ kubectl edit ts -n bookstore bookstore-split"
     echo
     echo "  6. Observe the following:"
     echo "    - All traffic is now going to V2"
